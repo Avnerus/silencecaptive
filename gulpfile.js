@@ -83,9 +83,12 @@ gulp.task('rollup-watch',['rollup'], function() {
       gulp.watch(['./src/app/**/*.*','./src/client/**/*.js'], ['rollup']);
 
 });
+gulp.task('css-watch',['css'], function() {
+      gulp.watch(['./src/client/style.scss'], ['css']);
+});
 
 // serve task
-gulp.task('serve', ['rollup-watch', 'css'] , function(cb) {
+gulp.task('serve', ['rollup-watch', 'css-watch'] , function(cb) {
 
     return nodemon({
          //exec: './node_modules/.bin/babel-node --presets es2015-riot,stage-2',
