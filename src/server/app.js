@@ -44,8 +44,9 @@ const server =
 });
 const io = socketio(server);
 
-const silenceManager = new SilenceManager();
+const silenceManager = new SilenceManager(io);
 
 io.on('connection', (socket) => {
     silenceManager.newClient(socket);
+    socket.on('disconnect', () => silenceManager.clientDisconnected(socket));
 });

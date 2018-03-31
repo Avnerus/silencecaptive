@@ -16,7 +16,6 @@ class SocketUtil {
 
         this.socket.on('reconnect', (attemptNumber) => {
             console.log("Socket reconnected");
-            this.trigger('socket_reconnect');
         }); 
     }
 
