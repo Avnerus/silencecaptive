@@ -53,11 +53,12 @@ gulp.task('rollup', function() {
     plugins: [
       nodent({runtime: true}),
       buble(),
-      commonjs(),
+     
       nodeResolve({
         jsnext: true,
         main: true
-      })
+        }),
+     commonjs() 
     ]
  };
 

@@ -6,6 +6,8 @@ import compress from 'compression'
 import cors from 'cors'
 import socketio from 'socket.io'
 
+import SilenceManager from './silence-manager'
+
 
 if (process.env.NODE_ENV == 'development') {
     memwatch.on('leak', (info) => {
@@ -41,3 +43,9 @@ const server =
     console.log('Node/Feathers app listening at http://%s:%s', host, port);
 });
 const io = socketio(server);
+
+const silenceManager = new SilenceManager();
+
+io.on('connection', (socket) => {
+    silenceManager.newClient(socket);
+});
