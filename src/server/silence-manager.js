@@ -5,6 +5,10 @@ export default class SilenceManager {
         this.socketRooms = {};
         this.io = io;
         this.roomData = {};
+
+        setInterval(() => {
+            this.updateRooms();
+        },100)
     }
 
     newClient(socket) {
@@ -27,9 +31,12 @@ export default class SilenceManager {
         this.socketRooms[socket.id] = this.waitingRoom;
         let roomData = this.roomData[this.waitingRoom];
         roomData.numberInRoom++;
+        if (roomData.numberInRoom >= 2) {
+            // Set the siren in 15 seconds
+            roomData.sirenTime = new Date().getTime() + 15000;            
+        }
         socket.join(this.waitingRoom);
         this.io.to(this.waitingRoom).emit('numberInRoom',roomData.numberInRoom);
-        
     }
 
     clientDisconnected(socket) {
@@ -42,6 +49,18 @@ export default class SilenceManager {
             roomData.numberInRoom--;
             this.io.to(socketRoom).emit('numberInRoom',roomData.numberInRoom);
             delete this.socketRooms[socket.id];
+        }
+    }
+
+    updateRooms() {
+        if (this.waitingRoom) {
+            let waitingRoom = this.roomData[this.waitingRoom];
+            if (waitingRoom.numberInRoom >= 2) {
+                let now = new Date().getTime();
+                let millisRemain = waitingRoom.sirenTime - now;
+                let secondsRemain = Math.floor(millisRemain / 1000);
+                this.io.to(this.waitingRoom).emit('secondsRemain',secondsRemain);
+            }
         }
     }
 }
