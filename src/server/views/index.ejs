@@ -27,26 +27,46 @@
 
   <body dir="rtl">
     <script src="/bundle.js"></script>
-    <section id="welcome">
-        <p>
-            לרגל שנות ה-70 למדינת ישראל, גלישה חופשית ברשת האינטרנט תתאפשר בתום דקת דומיה.
-        </p>
-        <p>
-            דקת הדומייה תיתכן רק ברעות, בנוכחות סולידרית של שניים ומעלה, תוך אחיזה רגישה של מכשיר הטלפון. אנא וודא/י שהסאונד במכשיר דולק.
-        </p>
+    <section id="siren-wait" style="display:none;">
+        <section id="welcome">
+            <p>
+                לרגל שנות ה-70 למדינת ישראל, גלישה חופשית ברשת האינטרנט תתאפשר בתום דקת דומיה.
+            </p>
+            <p>
+                דקת הדומייה תיתכן רק ברעות, בנוכחות סולידרית של שניים ומעלה, תוך אחיזה רגישה של מכשיר הטלפון. אנא וודא/י שהסאונד במכשיר דולק.
+            </p>
+        </section>
+        <section id="number-connected">
+            <p>
+                <span id="connected-message">מספר העומדים: </span>
+                <span id="connected-value"></span>
+            <p>
+        </section>
+        <section id="siren-countdown">
+            <p>
+                <span id="siren-message">הצפירה תתחיל בעוד </span>
+                <span id="countdown-value"></span>
+                <span id="siren-message-trail"> שניות</span>
+            <p>
+        </section>
     </section>
-    <section id="number-connected">
-        <p>
-            <span id="connected-message">מספר העומדים: </span>
-            <span id="connected-value"></span>
-        <p>
+    <section id="siren-press">
+            <div id="siren-title">
+                דקת דומיה
+            </div>
+            <div id="siren-instructions">
+                <p>
+                    הנח/י את אגודלך במקום המיועד לכך, למשך דקה. בעוד מספר רגעים תשמע צפירה.
+                </p>
+            </div>
     </section>
-    <section id="siren-countdown">
-        <p>
-            <span id="siren-message">הצפירה תתחיל בעוד </span>
-            <span id="countdown-value"></span>
-            <span id="siren-message-trail"> שניות</span>
-        <p>
-    </section>
+    <section id="siren-thumbs">
+        <div class="thumb-button">
+            אגודל
+        </div>
+        <div class="thumb-button">
+            אגודל
+        </div>
+    </div>
   </body>
 </html>
