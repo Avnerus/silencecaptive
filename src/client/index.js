@@ -7,6 +7,13 @@ window.IS_CLIENT = true
 let numberInRoom = 0;
 let secondsRemain = 9999;
 
+let thumbState = {
+    left: 0,
+    right: 0
+}
+
+let lastThumbState = 0;
+
 console.log("Starting silencecaptive");
 SocketUtil.initWithUrl(window.location.protocol + "//" + window.location.host);
 
@@ -24,5 +31,38 @@ SocketUtil.socket.on('secondsRemain', (seconds) => {
     console.log("Seconds remaining", seconds);
     $('#countdown-value').text(seconds);
 })
+
+$(document).ready(() => {
+    console.log("Binding events");
+    /* WEB DEBUG
+    $('.thumb-button').bind('touchstart', (event) => {
+        let target = $(event.currentTarget);
+        target.addClass('pressed');
+        thumbState[target.data('thumb')] = 1;
+        })*/
+
+    $('.thumb-button').bind('touchend', (event) => {
+        let target = $(event.currentTarget);
+        /* WEB DEBUG 
+        target.removeClass('pressed');
+        thumbState[target.data('thumb')] = 0; */
+
+        if (thumbState[target.data('thumb')] == 0) {
+            thumbState[target.data('thumb')] = 1; 
+            target.addClass('pressed');
+        } else {
+            thumbState[target.data('thumb')] = 0; 
+            target.removeClass('pressed');
+        }
+
+        updateThumbState();
+    })
+    
+})
+
+function updateThumbState() {
+        
+}
+
 
 

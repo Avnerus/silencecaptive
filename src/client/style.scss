@@ -39,4 +39,9 @@ body {
     border-radius: 30px;
     margin-right: 20px;
     margin-left: 20px;
+
+    &.pressed {
+        color: black;
+        background-color: white;
+    }
 }
