@@ -13,6 +13,7 @@ let thumbState = {
 }
 
 let lastThumbState = 0;
+let roomState = 'WAITING';
 
 console.log("Starting silencecaptive");
 SocketUtil.initWithUrl(window.location.protocol + "//" + window.location.host);
@@ -30,6 +31,18 @@ SocketUtil.socket.on('numberInRoom', (number) => {
 SocketUtil.socket.on('secondsRemain', (seconds) => {
     console.log("Seconds remaining", seconds);
     $('#countdown-value').text(seconds);
+})
+
+SocketUtil.socket.on('state', (state) => {
+    console.log("Change room state", state);
+    if (state == 'WAITING') {
+        $("#siren-wait").show();
+        $("#siren-container").hide();
+    }
+    else if (state == 'SIREN') {
+        $("#siren-wait").hide();
+        $("#siren-container").show();
+    }
 })
 
 $(document).ready(() => {
@@ -61,7 +74,12 @@ $(document).ready(() => {
 })
 
 function updateThumbState() {
-        
+    let newThumbState = thumbState['left'] && thumbState['right'];
+    if (newThumbState != lastThumbState) {
+       console.log("Update thumb state", newThumbState);
+       SocketUtil.socket.emit('thumbState', newThumbState); 
+    }
+    lastThumbState = newThumbState;
 }
 
 

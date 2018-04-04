@@ -23,7 +23,8 @@ export default class SilenceManager {
             console.log("Created new waiting room " + roomName);
             this.waitingRoom = roomName;
             this.roomData[this.waitingRoom] = {
-                numberInRoom: 0
+                numberInRoom: 0,
+                state: 'WAITING'
             }
         }
 
@@ -60,7 +61,21 @@ export default class SilenceManager {
                 let millisRemain = waitingRoom.sirenTime - now;
                 let secondsRemain = Math.floor(millisRemain / 1000);
                 this.io.to(this.waitingRoom).emit('secondsRemain',secondsRemain);
+
+                if (secondsRemain == 0) {
+                    this.changeState(this.waitingRoom, 'SIREN')
+                    this.waitingRoom = null;
+                }
             }
         }
+    }
+
+    thumbStateChanged(socket,state) {
+        console.log("Thumb state changed!", state);
+    }
+
+    changeState(room, state) {
+        this.roomData[room].state = state;
+        this.io.to(room).emit('state',state);
     }
 }

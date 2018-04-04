@@ -49,4 +49,5 @@ const silenceManager = new SilenceManager(io);
 io.on('connection', (socket) => {
     silenceManager.newClient(socket);
     socket.on('disconnect', () => silenceManager.clientDisconnected(socket));
+    socket.on('thumbState', (state) => silenceManager.thumbStateChanged(socket,state));
 });

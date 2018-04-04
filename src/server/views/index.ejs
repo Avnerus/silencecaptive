@@ -27,7 +27,7 @@
 
   <body dir="rtl">
     <script src="/bundle.js"></script>
-    <section id="siren-wait" style="display:none;">
+    <section id="siren-wait">
         <section id="welcome">
             <p>
                 לרגל שנות ה-70 למדינת ישראל, גלישה חופשית ברשת האינטרנט תתאפשר בתום דקת דומיה.
@@ -50,23 +50,25 @@
             <p>
         </section>
     </section>
-    <section id="siren-press">
-            <div id="siren-title">
-                דקת דומיה
+    <section id="siren-container" style="display:none;">
+        <section id="siren-press">
+                <div id="siren-title">
+                    דקת דומיה
+                </div>
+                <div id="siren-instructions">
+                    <p>
+                        הנח/י את אגודלך במקום המיועד לכך, למשך דקה. בעוד מספר רגעים תשמע צפירה.
+                    </p>
+                </div>
+        </section>
+        <section id="siren-thumbs">
+            <div class="thumb-button" data-thumb="right">
+                אגודל
             </div>
-            <div id="siren-instructions">
-                <p>
-                    הנח/י את אגודלך במקום המיועד לכך, למשך דקה. בעוד מספר רגעים תשמע צפירה.
-                </p>
+            <div class="thumb-button" data-thumb="left">
+                אגודל
             </div>
+        </div>
     </section>
-    <section id="siren-thumbs">
-        <div class="thumb-button" data-thumb="right">
-            אגודל
-        </div>
-        <div class="thumb-button" data-thumb="left">
-            אגודל
-        </div>
-    </div>
   </body>
 </html>
