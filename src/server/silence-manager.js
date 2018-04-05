@@ -8,6 +8,7 @@ export default class SilenceManager {
 
         this.WAIT_FOR_SIREN_SECONDS = 5;
         this.UPDATE_INTERVAL = 100;
+        this.SIREN_SECONDS = 60;
 
         setInterval(() => {
             this.updateRooms();
@@ -36,7 +37,8 @@ export default class SilenceManager {
         console.log("Joining room " + this.waitingRoom);
         this.socketData[socket.id] = {
             room: this.waitingRoom,
-            thumbState: 0
+            thumbState: 0,
+            handle: socket
         }
         let roomData = this.roomData[this.waitingRoom];
         roomData.numberInRoom++;
@@ -107,6 +109,16 @@ export default class SilenceManager {
                     }
                     if (allStates) {
                         console.log("Everyone has thumbs down!");
+                        // Prepping
+                        let yes = true;
+                        for (let i = 0; i < roomData.sockets.length && allStates; i++) {
+                            let socket = this.socketData[roomData.sockets[i]].handle;
+                            socket.emit('sirenPrep', {
+                                totalTime: this.SIREN_SECONDS,
+                                animation: yes ? 'yes' : 'no'
+                            })
+                            yes = !yes;
+                        }
                         this.changeState(roomData.name, 'SIREN_PLAY');
                     }
                 }

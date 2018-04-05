@@ -39,7 +39,22 @@ SocketUtil.socket.on('state', (state) => {
     else if (state == 'SIREN_PAUSE') {
         $("#siren-wait").hide();
         $("#siren-container").show();
+        $("#siren-anim").hide();
     }
+    else if (state == 'SIREN_PLAY') {
+        $("#siren-press").hide();
+        $("#siren-anim").show();
+    }
+})
+SocketUtil.socket.on('sirenPrep', (data) => {
+    console.log("Siren prep data", data);
+    let front = data.animation;
+    let back = front == 'yes' ? 'no' : 'yes';
+    
+    $('.' + front).css("stroke", "#0025ff");
+    $('.' + back).css("stroke", "#1b1b1b");
+
+    $('.' + front).insertAfter('.' + back);
 })
 
 $(document).ready(() => {
@@ -68,18 +83,19 @@ $(document).ready(() => {
         updateThumbState();
     })
 
+    /*
     let test = 60;
     setInterval(() => {
-        let percentFilled = (60 - test) / 100;
+        let percentFilled = (60 - test + 1) / 100;
         let newY = 300 - (250 * percentFilled);
         let newHeight = 250 * percentFilled;
         console.log("Height: ", newHeight, "Y: ", newY);
         $('#fillRect').velocity({
             y: newY,
             height: newHeight,
-        }, {duration: 1500,queue: false});
-        test-=1;
-        },1000) 
+        }, {duration: 2000,queue: false});
+        test-=0.5;
+        },500) */
             /* 
     $('#fillRect').velocity({
         y: 50,
