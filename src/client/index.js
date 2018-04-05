@@ -1,8 +1,4 @@
 import SocketUtil from './socket-util'
-/*
-window.IS_SERVER = false
-window.IS_CLIENT = true
-*/
 
 let numberInRoom = 0;
 let secondsRemain = 9999;
@@ -14,6 +10,7 @@ let thumbState = {
 
 let lastThumbState = 0;
 let roomState = 'WAITING';
+let lastRoomState = '';
 
 console.log("Starting silencecaptive");
 SocketUtil.initWithUrl(window.location.protocol + "//" + window.location.host);
@@ -34,12 +31,12 @@ SocketUtil.socket.on('secondsRemain', (seconds) => {
 })
 
 SocketUtil.socket.on('state', (state) => {
-    console.log("Change room state", state);
+    console.log("Changed room state", state);
     if (state == 'WAITING') {
         $("#siren-wait").show();
         $("#siren-container").hide();
     }
-    else if (state == 'SIREN') {
+    else if (state == 'SIREN_PAUSE') {
         $("#siren-wait").hide();
         $("#siren-container").show();
     }
@@ -70,7 +67,24 @@ $(document).ready(() => {
 
         updateThumbState();
     })
-    
+
+    let test = 60;
+    setInterval(() => {
+        let percentFilled = (60 - test) / 100;
+        let newY = 300 - (250 * percentFilled);
+        let newHeight = 250 * percentFilled;
+        console.log("Height: ", newHeight, "Y: ", newY);
+        $('#fillRect').velocity({
+            y: newY,
+            height: newHeight,
+        }, {duration: 1500,queue: false});
+        test-=1;
+        },1000) 
+            /* 
+    $('#fillRect').velocity({
+        y: 50,
+        height: 300
+        }, {duration: 60000}); */
 })
 
 function updateThumbState() {
