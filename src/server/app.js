@@ -15,7 +15,6 @@ if (process.env.NODE_ENV == 'development') {
     });
 }
 
-
 console.log("Starting Moment of Silence server");
 
 const app = express()

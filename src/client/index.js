@@ -13,6 +13,22 @@ let roomState = 'WAITING';
 let lastRoomState = '';
 let totalSirenTime = 0;
 
+const FILL_SIZES = {
+    he: {
+        'yes': [65,240],
+        'no': [35, 206],
+        'viewBox': "0 0 394.58 324"
+    },
+    en: {
+        'yes': [65, 172],
+        'no': [60,182],
+        'viewBox': "0 0 526.66 315.98"
+    }
+}
+
+let currentFill = [];
+
+
 console.log("Starting silencecaptive");
 SocketUtil.initWithUrl(window.location.protocol + "//" + window.location.host);
 
@@ -58,6 +74,13 @@ SocketUtil.socket.on('sirenPrep', (data) => {
     $('.' + back).css("stroke", "#1b1b1b");
 
     $('.' + front).insertAfter('.' + back);
+
+    currentFill = FILL_SIZES.he[front];
+    $('#fillRect').attr("y", currentFill[0] + currentFill[1]);
+    $('#fillRect').attr("height", 0);
+    $('#fillRect').attr("clip-path", "url(#sirenClip-" + front + ")");
+    
+
         /*
     $('#fillRect').velocity({
         y: 65,
@@ -73,12 +96,13 @@ SocketUtil.socket.on('sirenCountdown', (countdown) => {
     let percentFilled = ((totalSirenTime - countdown) / totalSirenTime);
     percentFilled = Math.min(1, percentFilled + 0.006) // Prediction
 
-    let newY = 305 - (240 * percentFilled);
-    let newHeight = 240 * percentFilled;
+    let newY = currentFill[0] + currentFill[1] - (currentFill[1] * percentFilled);
+    let newHeight = currentFill[1] * percentFilled;
+
     $('#fillRect').velocity({
         y: newY,
         height: newHeight,
-        }, {duration: 1000,queue: false, easing: 'linear'});
+        }, {duration: 1000,queue: false, easing: 'linear'}); 
 })
 
 $(document).ready(() => {
