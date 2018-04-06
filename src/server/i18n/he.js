@@ -27,5 +27,7 @@ export default {
     THEY_PAUSED: "הזמן עצר, מישהו שחרר.",
     RESUME: "הצפירה תתחיל מחדש בעוד מספר רגעים.",
     SIREN_OVER: "תם הטקס.",
-    MAY_SURF: "הקהל ראשי לגלוש."
+    MAY_SURF: "הקהל ראשי לגלוש.",
+    YES_AUDIO: '/audio/ken.ogg',
+    NO_AUDIO: '/audio/lo.ogg'
 }

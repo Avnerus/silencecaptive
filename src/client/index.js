@@ -15,6 +15,7 @@ let totalSirenTime = 0;
 
 let currentFill = [];
 let lang = 'he';
+let front = '';
 
 
 console.log("Starting silencecaptive");
@@ -48,6 +49,7 @@ SocketUtil.socket.on('state', (state) => {
             $("#siren-anim").hide();
         } else {
             console.log("Someone let go!");
+            $("#" + front + "-audio")[0].pause();
             $('#siren-pause').show();
             if (lastThumbState == 0) {
                 // It's me
@@ -64,10 +66,12 @@ SocketUtil.socket.on('state', (state) => {
         $("#siren-press").hide();
         $("#siren-anim").show();
         $("#siren-pause").hide();
+        $("#" + front + "-audio")[0].play();
     }
     else if (state == 'SIREN_OVER') {
         $("#siren-container").hide();
         $("#siren-over").show();
+        $("#" + front + "-audio")[0].pause();
     }
     lastRoomState = state;
 })
@@ -75,7 +79,7 @@ SocketUtil.socket.on('sirenPrep', (data) => {
     console.log("Siren prep data", data);
     $('#siren-count').text(data.totalTime / 1000);
     totalSirenTime = data.totalTime;
-    let front = data.animation;
+    front = data.animation;
     let back = front == 'yes' ? 'no' : 'yes';
     
     $('.' + front).css("stroke", "#0025ff");
