@@ -10,7 +10,7 @@ let thumbState = {
 
 let lastThumbState = 0;
 let roomState = 'WAITING';
-let lastRoomState = '';
+let lastRoomState = 'WAITING';
 let totalSirenTime = 0;
 
 let currentFill = [];
@@ -42,14 +42,30 @@ SocketUtil.socket.on('state', (state) => {
         $("#siren-container").hide();
     }
     else if (state == 'SIREN_PAUSE') {
-        $("#siren-wait").hide();
-        $("#siren-container").show();
-        $("#siren-anim").hide();
+        if (lastRoomState == 'WAITING') {
+            $("#siren-wait").hide();
+            $("#siren-container").show();
+            $("#siren-anim").hide();
+        } else {
+            console.log("Someone let go!");
+            $('#siren-pause').show();
+            if (lastThumbState == 0) {
+                // It's me
+                $('#you-paused').show();                                
+                $('#they-paused').hide();
+            } else {
+                // It's them
+                $('#they-paused').show();
+                $('#you-paused').hide();                                
+            }
+        }
     }
     else if (state == 'SIREN_PLAY') {
         $("#siren-press").hide();
         $("#siren-anim").show();
+        $("#siren-pause").hide();
     }
+    lastRoomState = state;
 })
 SocketUtil.socket.on('sirenPrep', (data) => {
     console.log("Siren prep data", data);

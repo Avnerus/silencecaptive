@@ -132,6 +132,15 @@ export default class SilenceManager {
 
                     }
                 }
+                else {
+                    // Pause
+                    if (roomData.timer) {
+                        clearInterval(roomData.timer);
+                        roomData.timer = null;
+                    }
+                    this.changeState(roomData.name, 'SIREN_PAUSE');
+                    
+                }
             } else {
                 console.error("No room data for " + socket.room)
             }
