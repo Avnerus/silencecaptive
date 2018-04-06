@@ -7,6 +7,7 @@ import cors from 'cors'
 import socketio from 'socket.io'
 
 import SilenceManager from './silence-manager'
+import i18n from './i18n'
 
 
 if (process.env.NODE_ENV == 'development') {
@@ -29,7 +30,7 @@ const app = express()
 .use(express.static(__dirname + "/../../public"))
 
 app.get('/', function (req, res) {
-    res.render('index');
+    res.render('index', {i18n: i18n.he});
 })
 
 // Server routes

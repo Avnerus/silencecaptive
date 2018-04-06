@@ -13,20 +13,8 @@ let roomState = 'WAITING';
 let lastRoomState = '';
 let totalSirenTime = 0;
 
-const FILL_SIZES = {
-    he: {
-        'yes': [65,240],
-        'no': [35, 206],
-        'viewBox': "0 0 394.58 324"
-    },
-    en: {
-        'yes': [65, 172],
-        'no': [60,182],
-        'viewBox': "0 0 526.66 315.98"
-    }
-}
-
 let currentFill = [];
+let lang = 'he';
 
 
 console.log("Starting silencecaptive");
@@ -75,7 +63,10 @@ SocketUtil.socket.on('sirenPrep', (data) => {
 
     $('.' + front).insertAfter('.' + back);
 
-    currentFill = FILL_SIZES.he[front];
+    currentFill = [
+        $('.' + front).data('fillY'),
+        $('.' + front).data('fillHeight'),
+    ]
     $('#fillRect').attr("y", currentFill[0] + currentFill[1]);
     $('#fillRect').attr("height", 0);
     $('#fillRect').attr("clip-path", "url(#sirenClip-" + front + ")");
@@ -130,25 +121,6 @@ $(document).ready(() => {
 
         updateThumbState();
     })
-
-    /*
-    let test = 60;
-    setInterval(() => {
-        let percentFilled = (60 - test + 1) / 100;
-        let newY = 300 - (250 * percentFilled);
-        let newHeight = 250 * percentFilled;
-        console.log("Height: ", newHeight, "Y: ", newY);
-        $('#fillRect').velocity({
-            y: newY,
-            height: newHeight,
-        }, {duration: 2000,queue: false});
-        test-=0.5;
-        },500) */
-            /* 
-    $('#fillRect').velocity({
-        y: 50,
-        height: 300
-        }, {duration: 60000}); */
 })
 
 function updateThumbState() {

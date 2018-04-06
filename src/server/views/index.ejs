@@ -26,73 +26,93 @@
   </script>
   </head>
 
-  <body dir="rtl">
+  <body dir="<%= i18n.HTML_DIR %>" class="<%= i18n.LANG %>">
     <script src="/bundle.js"></script>
     <section id="siren-wait" style="display:block;">
         <section id="welcome">
             <p>
-                לרגל שנות ה-70 למדינת ישראל, גלישה חופשית ברשת האינטרנט תתאפשר בתום דקת דומיה.
+                <%= i18n.WELCOME_1 %>
             </p>
             <p>
-                דקת הדומייה תיתכן רק ברעות, בנוכחות סולידרית של שניים ומעלה, תוך אחיזה רגישה של מכשיר הטלפון. אנא וודא/י שהסאונד במכשיר דולק.
+                <%= i18n.WELCOME_2 %>
+            </p>
+            <p>
+                <%= i18n.WELCOME_3 %>
+            </p>
+            <p>
+                <%= i18n.WELCOME_4 %>
             </p>
         </section>
         <section id="number-connected">
             <p>
-                <span id="connected-message">מספר העומדים: </span>
+                <span id="connected-message">
+                    <%= i18n.NUM_CONNECTED %>
+                </span>
                 <span id="connected-value"></span>
             <p>
         </section>
         <section id="siren-countdown">
-            <p>
-                <span id="siren-message">הצפירה תתחיל בעוד </span>
+            <p dir="ltr">
+                <span id="siren-message">
+                    Starting in:
+                </span>
                 <span id="countdown-value"></span>
-                <span id="siren-message-trail"> שניות</span>
             <p>
         </section>
     </section>
     <section id="siren-container" style="display:none;">
         <section id="siren-press" style="display:block;">
                 <div id="siren-title">
-                    דקת דומיה
+                    <%= i18n.SIREN_TITLE %>
                 </div>
                 <div id="siren-instructions">
                     <p>
-                        הנח/י את אגודלך במקום המיועד לכך, למשך דקה. בעוד מספר רגעים תשמע צפירה.
+                        <%= i18n.SIREN_INSTRUCTIONS %>
                     </p>
                 </div>
         </section>
         <section id="siren-anim">
             <span id="siren-count"></span>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 394.58 324"><defs>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="<%= i18n.VIEWBOX %>"><defs>
                 <style>
                         .letter{fill:none;stroke-width:8px;}
                 </style></defs><title>Artboard 3</title>
                 <clipPath id="sirenClip-yes">
-                    <path d="M145.42,82V304H86.91V109H72.81V64h56.11C140.32,64,145.42,70,145.42,82Z"/>
-                    <path d="M327.55,182.79c0,42.61-21,61.21-69,61.21H185.33V199h52.21c19.8,0,28.5-9.3,28.5-31.2V109H185.33V64H327.55Z"/>
+                    <% for (var i=0; i<i18n.YES_PATH.length; i++) { %>
+                        <path d="<%= i18n.YES_PATH[i] %>"/>
+                    <% } %>
                 </clipPath>
                 <clipPath id="sirenClip-no">
-                    <path d="M138.92,244,91.21,166.59c-6-9.6-8.4-14.41-15-14.41S69,158.49,69,168.69v32.7h24.3V244H15V162.69c0-23.11,8.1-36.91,24.91-43.21a70.81,70.81,0,0,1,17.4-3.9L21.9,64h60l48,77.41c6,9.6,8.4,14.4,15,14.4,6.9,0,7.2-6.3,7.2-16.5v-32.7h-24.3V64h78.31v81.31c0,23.11-8.1,36.91-24.9,43.21a59.36,59.36,0,0,1-17.4,3.9L199.23,244Z"/>
-                    <path d="M314.75,109H235.54V34h55.81V64h84.31v45L317.45,244H256.54Z"/>
+                    <% for (var i=0; i<i18n.NO_PATH.length; i++) { %>
+                        <path d="<%= i18n.NO_PATH[i] %>"/>
+                    <% } %>
                 </clipPath>
-                <g class="no">
-                    <path class="letter" d="M138.92,244,91.21,166.59c-6-9.6-8.4-14.41-15-14.41S69,158.49,69,168.69v32.7h24.3V244H15V162.69c0-23.11,8.1-36.91,24.91-43.21a70.81,70.81,0,0,1,17.4-3.9L21.9,64h60l48,77.41c6,9.6,8.4,14.4,15,14.4,6.9,0,7.2-6.3,7.2-16.5v-32.7h-24.3V64h78.31v81.31c0,23.11-8.1,36.91-24.9,43.21a59.36,59.36,0,0,1-17.4,3.9L199.23,244Z"/>
-                    <path class="letter" d="M314.75,109H235.54V34h55.81V64h84.31v45L317.45,244H256.54Z"/>
+                <g class="no"
+                    data-fill-y="<%= i18n.FILL_SIZE['no'][0] %>"
+                    data-fill-height="<%= i18n.FILL_SIZE['no'][1] %>"
+                >
+                    <% for (var i=0; i<i18n.NO_PATH.length; i++) { %>
+                        <path class="letter" d="<%= i18n.NO_PATH[i] %>"/>
+                    <% } %>
                 </g>
-                <g class="yes">
-                    <path class="letter" d="M145.42,82V304H86.91V109H72.81V64h56.11C140.32,64,145.42,70,145.42,82Z"/>
-                    <path class="letter" d="M327.55,182.79c0,42.61-21,61.21-69,61.21H185.33V199h52.21c19.8,0,28.5-9.3,28.5-31.2V109H185.33V64H327.55Z"/>
+                <g class="yes"
+                   data-fill-y="<%= i18n.FILL_SIZE['yes'][0] %>"
+                   data-fill-height="<%= i18n.FILL_SIZE['yes'][1] %>"
+                >
+                    <% for (var i=0; i<i18n.YES_PATH.length; i++) { %>
+                        <path class="letter" d="<%= i18n.YES_PATH[i] %>"/>
+                    <% } %>
                 </g>
-                <rect id="fillRect" y="300" width="100%" height="10" style="fill:rgb(0,0,255)" clip-path="url(#sirenClip-no)"/>
+                <rect 
+                    id="fillRect" y="300" width="100%" height="10" style="fill:rgb(0,0,255)" clip-path=""/>
             </svg>
         </section>
         <section id="siren-thumbs">
             <div class="thumb-button" data-thumb="right">
-                אגודל
+                <%= i18n.THUMB %>
             </div>
             <div class="thumb-button" data-thumb="left">
-                אגודל
+                <%= i18n.THUMB %>
             </div>
         </div>
     </section>
