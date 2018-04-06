@@ -26,6 +26,8 @@ export default {
     },
     YOU_PAUSED: "Time has stopped. You let go.",
     THEY_PAUSED: "Time has stopped. Someone let go.",
-    RESUME: "The siren will resume shortly"
+    RESUME: "The siren will resume shortly.",
+    SIREN_OVER: "End of service.",
+    MAY_SURF: "You may now surf the net."
 }
 

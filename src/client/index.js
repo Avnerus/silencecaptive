@@ -65,6 +65,10 @@ SocketUtil.socket.on('state', (state) => {
         $("#siren-anim").show();
         $("#siren-pause").hide();
     }
+    else if (state == 'SIREN_OVER') {
+        $("#siren-container").hide();
+        $("#siren-over").show();
+    }
     lastRoomState = state;
 })
 SocketUtil.socket.on('sirenPrep', (data) => {

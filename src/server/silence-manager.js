@@ -159,5 +159,10 @@ export default class SilenceManager {
     updateSiren(roomData) {
         roomData.sirenCountdown -= this.SIREN_UPDATE_INTERVAL;               
         this.io.to(roomData.name).emit('sirenCountdown',roomData.sirenCountdown);
+        if (roomData.sirenCountdown <= 0) {
+            // Over!
+            this.changeState(roomData.name, 'SIREN_OVER');
+            clearInterval(roomData.timer);
+        }
     }
 }

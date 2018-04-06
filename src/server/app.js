@@ -18,6 +18,11 @@ if (process.env.NODE_ENV == 'development') {
 
 console.log("Starting Moment of Silence server");
 
+const SUPPORTED_LANGS = {
+    'en' : 'en',
+    'he': 'he'
+}
+
 const app = express()
 .set('views', __dirname + "/views")
 .set('view engine', 'ejs')
@@ -30,7 +35,11 @@ const app = express()
 .use(express.static(__dirname + "/../../public"))
 
 app.get('/', function (req, res) {
-    res.render('index', {i18n: i18n.he});
+    let i18nData = i18n.he;
+    if (req.query.lang && SUPPORTED_LANGS[req.query.lang]) {
+        i18nData = i18n[req.query.lang];
+    }
+    res.render('index', {i18n: i18nData});
 })
 
 // Server routes
