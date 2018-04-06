@@ -11,6 +11,7 @@ let thumbState = {
 let lastThumbState = 0;
 let roomState = 'WAITING';
 let lastRoomState = '';
+let totalSirenTime = 0;
 
 console.log("Starting silencecaptive");
 SocketUtil.initWithUrl(window.location.protocol + "//" + window.location.host);
@@ -48,6 +49,8 @@ SocketUtil.socket.on('state', (state) => {
 })
 SocketUtil.socket.on('sirenPrep', (data) => {
     console.log("Siren prep data", data);
+    $('#siren-count').text(data.totalTime / 1000);
+    totalSirenTime = data.totalTime;
     let front = data.animation;
     let back = front == 'yes' ? 'no' : 'yes';
     
@@ -55,6 +58,27 @@ SocketUtil.socket.on('sirenPrep', (data) => {
     $('.' + back).css("stroke", "#1b1b1b");
 
     $('.' + front).insertAfter('.' + back);
+        /*
+    $('#fillRect').velocity({
+        y: 65,
+        height: 240,
+        }, {duration: 60000,queue: false, easing: 'linear'});
+        */
+})
+
+SocketUtil.socket.on('sirenCountdown', (countdown) => {
+    console.log("Siren countdown " + countdown);
+    $('#siren-count').text(Math.round(countdown / 1000));
+
+    let percentFilled = ((totalSirenTime - countdown) / totalSirenTime);
+    percentFilled = Math.min(1, percentFilled + 0.006) // Prediction
+
+    let newY = 305 - (240 * percentFilled);
+    let newHeight = 240 * percentFilled;
+    $('#fillRect').velocity({
+        y: newY,
+        height: newHeight,
+        }, {duration: 1000,queue: false, easing: 'linear'});
 })
 
 $(document).ready(() => {

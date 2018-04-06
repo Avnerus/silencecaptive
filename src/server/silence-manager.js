@@ -7,12 +7,13 @@ export default class SilenceManager {
         this.roomData = {};
 
         this.WAIT_FOR_SIREN_SECONDS = 5;
-        this.UPDATE_INTERVAL = 100;
-        this.SIREN_SECONDS = 60;
+        this.WAIT_UPDATE_INTERVAL = 100;
+        this.SIREN_MILLISECONDS = 60 * 1000;
+        this.SIREN_UPDATE_INTERVAL = 500;
 
         setInterval(() => {
             this.updateRooms();
-        },100)
+        },this.WAIT_UPDATE_INTERVAL)
     }
 
     newClient(socket) {
@@ -30,7 +31,9 @@ export default class SilenceManager {
                 name: this.waitingRoom,
                 numberInRoom: 0,
                 state: 'WAITING',
-                sockets: []
+                sockets: [],
+                timer: null,
+                sirenCountdown: this.SIREN_MILLISECONDS
             }
         }
 
@@ -109,17 +112,24 @@ export default class SilenceManager {
                     }
                     if (allStates) {
                         console.log("Everyone has thumbs down!");
-                        // Prepping
-                        let yes = true;
-                        for (let i = 0; i < roomData.sockets.length && allStates; i++) {
-                            let socket = this.socketData[roomData.sockets[i]].handle;
-                            socket.emit('sirenPrep', {
-                                totalTime: this.SIREN_SECONDS,
-                                animation: yes ? 'yes' : 'no'
-                            })
-                            yes = !yes;
+                        if (roomData.sirenCountdown == this.SIREN_MILLISECONDS) {
+                            // First time. Prepping
+                            let yes = true;
+                            for (let i = 0; i < roomData.sockets.length && allStates; i++) {
+                                let socket = this.socketData[roomData.sockets[i]].handle;
+                                socket.emit('sirenPrep', {
+                                    totalTime: this.SIREN_MILLISECONDS,
+                                    animation: yes ? 'yes' : 'no'
+                                })
+                                yes = !yes;
+                            }
+
                         }
                         this.changeState(roomData.name, 'SIREN_PLAY');
+                        roomData.timer = setInterval(() => {
+                            this.updateSiren(roomData);
+                        },this.SIREN_UPDATE_INTERVAL)
+
                     }
                 }
             } else {
@@ -135,5 +145,10 @@ export default class SilenceManager {
         } else {
             console.error("changeState - No room data for " + room);
         }
+    }
+
+    updateSiren(roomData) {
+        roomData.sirenCountdown -= this.SIREN_UPDATE_INTERVAL;               
+        this.io.to(roomData.name).emit('sirenCountdown',roomData.sirenCountdown);
     }
 }
