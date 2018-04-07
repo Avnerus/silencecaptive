@@ -41,11 +41,15 @@ SocketUtil.socket.on('state', (state) => {
     if (state == 'WAITING') {
         $("#siren-wait").show();
         $("#siren-container").hide();
+        if (front != '') {
+            $("#" + front + "-audio")[0].pause();
+        }
     }
     else if (state == 'SIREN_PAUSE') {
         if (lastRoomState == 'WAITING') {
             $("#siren-wait").hide();
             $("#siren-container").show();
+            $("#siren-press").show();
             $("#siren-anim").hide();
         } else {
             console.log("Someone let go!");

@@ -75,6 +75,14 @@ export default class SilenceManager {
                     console.log("Disposing room " + roomData.name);
                     delete this.roomData[roomData.name];
                 }
+
+                // If now there is only one person then we have to wait again for the siren.
+                if (roomData.numberInRoom < 2 && roomData.state != 'WAITING') {
+                    this.waitingRoom = roomData.name;
+                    roomData.sirenCountdown = this.SIREN_MILLISECONDS;
+                    this.changeState(roomData.name, 'WAITING');
+                }
+
             }
             delete this.socketData[socket.id];
         }
