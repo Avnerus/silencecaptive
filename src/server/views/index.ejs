@@ -51,7 +51,7 @@
                 <span id="connected-value"></span>
             <p>
         </section>
-        <section id="siren-countdown">
+        <section id="siren-countdown" style="display:none;">
             <p dir="ltr">
                 <span id="siren-message">
                     Starting in:
@@ -143,5 +143,6 @@
     <audio id="no-audio">
         <source src="<%= i18n.NO_AUDIO %>" type="audio/ogg">
     </audio> 
+    <input id="auth-target" type="hidden" value="<%= authTarget %>">
   </body>
 </html>

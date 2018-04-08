@@ -6,7 +6,7 @@ export default class SilenceManager {
         this.io = io;
         this.roomData = {};
 
-        this.WAIT_FOR_SIREN_SECONDS = 5;
+        this.WAIT_FOR_SIREN_SECONDS = 10;
         this.WAIT_UPDATE_INTERVAL = 100;
         this.SIREN_MILLISECONDS = 60 * 1000;
         this.SIREN_UPDATE_INTERVAL = 500;
@@ -78,6 +78,10 @@ export default class SilenceManager {
 
                 // If now there is only one person then we have to wait again for the siren.
                 if (roomData.numberInRoom < 2 && roomData.state != 'WAITING') {
+                    if (this.waitingRoom) {
+                        console.log("Disposing waiting room due to emergency" + this.waitingRoom);
+                        delete this.roomData[this.waitingRoom];
+                    }
                     this.waitingRoom = roomData.name;
                     roomData.sirenCountdown = this.SIREN_MILLISECONDS;
                     this.changeState(roomData.name, 'WAITING');

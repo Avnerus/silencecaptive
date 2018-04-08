@@ -76,6 +76,12 @@ SocketUtil.socket.on('state', (state) => {
         $("#siren-container").hide();
         $("#siren-over").show();
         $("#" + front + "-audio")[0].pause();
+        if ($('#auth-target').value() != '') {
+            console.log("Authenticating...");
+            setTimeout(() => {
+                window.location = $('#auth-target').value();                
+            },5000);
+        }
     }
     lastRoomState = state;
 })

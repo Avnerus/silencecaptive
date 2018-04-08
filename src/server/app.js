@@ -36,10 +36,14 @@ const app = express()
 
 app.get('/', function (req, res) {
     let i18nData = i18n.he;
+    let authTarget = req.query.authtarget || '';
     if (req.query.lang && SUPPORTED_LANGS[req.query.lang]) {
         i18nData = i18n[req.query.lang];
     }
-    res.render('index', {i18n: i18nData});
+    res.render('index', {
+        i18n: i18nData,
+        authTarget: authTarget
+    });
 })
 
 // Server routes
