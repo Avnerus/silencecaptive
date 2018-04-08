@@ -76,10 +76,10 @@ SocketUtil.socket.on('state', (state) => {
         $("#siren-container").hide();
         $("#siren-over").show();
         $("#" + front + "-audio")[0].pause();
-        if ($('#auth-target').value() != '') {
+        if ($('#auth-target').val() != '') {
             console.log("Authenticating...");
             setTimeout(() => {
-                window.location = $('#auth-target').value();                
+                window.location = $('#auth-target').val();                
             },5000);
         }
     }
