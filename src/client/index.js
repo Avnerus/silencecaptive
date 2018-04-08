@@ -77,10 +77,10 @@ SocketUtil.socket.on('state', (state) => {
         $("#siren-container").hide();
         $("#siren-over").show();
         $("#" + front + "-audio")[0].pause();
-        if ($('#auth-action').length > 0) {
+        if ($('#auth-form').length > 0) {
             console.log("Authenticating...");
             setTimeout(() => {
-                window.location = $('#auth-action').val() + '?redir=' + $('#auth-redir').val() + '&tok=' + $('#auth-tok').val();
+                $('#auth-form').submit();
             },3000);
         }
     }
