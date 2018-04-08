@@ -41,6 +41,7 @@ SocketUtil.socket.on('state', (state) => {
     if (state == 'WAITING') {
         $("#siren-wait").show();
         $("#siren-container").hide();
+        $("#siren-over").hide();
         if (front != '') {
             $("#" + front + "-audio")[0].pause();
         }

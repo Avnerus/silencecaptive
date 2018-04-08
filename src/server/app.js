@@ -9,6 +9,8 @@ import socketio from 'socket.io'
 import SilenceManager from './silence-manager'
 import i18n from './i18n'
 
+import querystring from 'querystring'
+
 
 if (process.env.NODE_ENV == 'development') {
     memwatch.on('leak', (info) => {
@@ -36,7 +38,10 @@ const app = express()
 
 app.get('/', function (req, res) {
     let i18nData = i18n.he;
-    let authTarget = req.query.authtarget || '';
+    let authTarget = '';
+    if (req.query.authtarget) {
+        authTarget = querystring.escape(req.query.authtarget);
+    }
     if (req.query.lang && SUPPORTED_LANGS[req.query.lang]) {
         i18nData = i18n[req.query.lang];
     }
