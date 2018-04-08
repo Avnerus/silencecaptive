@@ -83,10 +83,14 @@ export default class SilenceManager {
                         delete this.roomData[this.waitingRoom];
                     }
                     this.waitingRoom = roomData.name;
+                    // Reset room
                     roomData.sirenCountdown = this.SIREN_MILLISECONDS;
                     if (roomData.timer) {
                         clearInterval(roomData.timer);
                         roomData.timer = null;
+                    }
+                    for (let i = 0; i < roomData.sockets.length; i++) {
+                        this.socketData[roomData.sockets[i]].thumbState = 0;
                     }
                     this.changeState(roomData.name, 'WAITING');
                 }

@@ -48,6 +48,10 @@ SocketUtil.socket.on('state', (state) => {
         if (front != '' && audioStarted) {
             $("#" + front + "-audio")[0].volume = 0;
         }
+        audioTime = 0;
+        $('.thumb-button').removeClass('pressed');
+        lastThumbState = 0;
+        thumbState.left = thumbState.right = 0;
     }
     else if (state == 'SIREN_PAUSE') {
         if (lastRoomState == 'WAITING') {
