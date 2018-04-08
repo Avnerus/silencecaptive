@@ -145,8 +145,8 @@
     </audio> 
     <%if (auth) { %>
         <form id="auth-form" method="get" action="<%= auth.action %>">
-            <input id="auth-tok" type="hidden" value="<%= auth.tok %>">
-            <input id="auth-redir" type="hidden" value="<%= auth.redir %>">
+            <input name="tok" type="hidden" value="<%= auth.tok %>">
+            <input name="redir" type="hidden" value="<%= auth.redir %>">
         </form>
     <% } %>
   </body>
