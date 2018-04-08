@@ -35,16 +35,20 @@ const app = express()
 
 app.get('/', function (req, res) {
     let i18nData = i18n.he;
-    let authTarget = '';
-    if (req.query.authtarget && req.query.tok) {
-        authTarget = req.query.authtarget + "&tok=" + req.query.tok;
+    let auth = null;
+    if (req.query.authaction && req.query.tok && req.query.redir) {
+        auth = {
+            action: req.query.authaction,
+            tok : req.query.tok,
+            redir: req.query.redir
+        }  
     }
     if (req.query.lang && SUPPORTED_LANGS[req.query.lang]) {
         i18nData = i18n[req.query.lang];
     }
     res.render('index', {
         i18n: i18nData,
-        authTarget: authTarget
+        auth: auth
     });
 })
 

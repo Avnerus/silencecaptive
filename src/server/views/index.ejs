@@ -143,6 +143,10 @@
     <audio id="no-audio">
         <source src="<%= i18n.NO_AUDIO %>" type="audio/ogg">
     </audio> 
-    <input id="auth-target" type="hidden" value="<%= authTarget %>">
+    <%if (auth) { %>
+        <input id="auth-action" type="hidden" value="<%= auth.action %>">
+        <input id="auth-tok" type="hidden" value="<%= auth.tok %>">
+        <input id="auth-redir" type="hidden" value="<%= auth.redir %>">
+    <% } %>
   </body>
 </html>
