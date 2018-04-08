@@ -84,6 +84,10 @@ export default class SilenceManager {
                     }
                     this.waitingRoom = roomData.name;
                     roomData.sirenCountdown = this.SIREN_MILLISECONDS;
+                    if (roomData.timer) {
+                        clearInterval(roomData.timer);
+                        roomData.timer = null;
+                    }
                     this.changeState(roomData.name, 'WAITING');
                 }
 
@@ -103,6 +107,18 @@ export default class SilenceManager {
 
                 if (secondsRemain == 0) {
                     this.changeState(this.waitingRoom, 'SIREN_PAUSE')
+                    // Prepping
+                    let yes = true;
+                    let roomData = this.roomData[this.waitingRoom];
+                    for (let i = 0; i < roomData.sockets.length; i++) {
+                        let socket = this.socketData[roomData.sockets[i]].handle;
+                        socket.emit('sirenPrep', {
+                            totalTime: this.SIREN_MILLISECONDS,
+                            animation: yes ? 'yes' : 'no'
+                        })
+                        yes = !yes;
+                    }
+
                     this.waitingRoom = null;
                 }
             }
@@ -124,19 +140,6 @@ export default class SilenceManager {
                     }
                     if (allStates) {
                         console.log("Everyone has thumbs down!");
-                        if (roomData.sirenCountdown == this.SIREN_MILLISECONDS) {
-                            // First time. Prepping
-                            let yes = true;
-                            for (let i = 0; i < roomData.sockets.length && allStates; i++) {
-                                let socket = this.socketData[roomData.sockets[i]].handle;
-                                socket.emit('sirenPrep', {
-                                    totalTime: this.SIREN_MILLISECONDS,
-                                    animation: yes ? 'yes' : 'no'
-                                })
-                                yes = !yes;
-                            }
-
-                        }
                         this.changeState(roomData.name, 'SIREN_PLAY');
                         roomData.timer = setInterval(() => {
                             this.updateSiren(roomData);

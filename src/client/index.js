@@ -12,10 +12,13 @@ let lastThumbState = 0;
 let roomState = 'WAITING';
 let lastRoomState = 'WAITING';
 let totalSirenTime = 0;
+let audioTime = 0;
 
 let currentFill = [];
 let lang = 'he';
 let front = '';
+
+let audioStarted = false;
 
 
 console.log("Starting silencecaptive");
@@ -42,8 +45,8 @@ SocketUtil.socket.on('state', (state) => {
         $("#siren-wait").show();
         $("#siren-container").hide();
         $("#siren-over").hide();
-        if (front != '') {
-            $("#" + front + "-audio")[0].pause();
+        if (front != '' && audioStarted) {
+            $("#" + front + "-audio")[0].volume = 0;
         }
     }
     else if (state == 'SIREN_PAUSE') {
@@ -54,7 +57,9 @@ SocketUtil.socket.on('state', (state) => {
             $("#siren-anim").hide();
         } else {
             console.log("Someone let go!");
-            $("#" + front + "-audio")[0].pause();
+            if (front != '' && audioStarted) {
+                $("#" + front + "-audio")[0].volume = 0;
+            }
             $('#siren-pause').show();
             if (lastThumbState == 0) {
                 // It's me
@@ -71,7 +76,9 @@ SocketUtil.socket.on('state', (state) => {
         $("#siren-press").hide();
         $("#siren-anim").show();
         $("#siren-pause").hide();
-        $("#" + front + "-audio")[0].play();
+        console.log("Restarting audio at", audioTime);
+        $("#" + front + "-audio")[0].volume = 1.0;
+        $("#" + front + "-audio")[0].currentTime = audioTime;
     }
     else if (state == 'SIREN_OVER') {
         $("#siren-container").hide();
@@ -90,6 +97,7 @@ SocketUtil.socket.on('sirenPrep', (data) => {
     console.log("Siren prep data", data);
     $('#siren-count').text(data.totalTime / 1000);
     totalSirenTime = data.totalTime;
+
     front = data.animation;
     let back = front == 'yes' ? 'no' : 'yes';
     
@@ -101,7 +109,7 @@ SocketUtil.socket.on('sirenPrep', (data) => {
     currentFill = [
         $('.' + front).data('fillY'),
         $('.' + front).data('fillHeight'),
-    ]
+    ];
     $('#fillRect').attr("y", currentFill[0] + currentFill[1]);
     $('#fillRect').attr("height", 0);
     $('#fillRect').attr("clip-path", "url(#sirenClip-" + front + ")");
@@ -116,9 +124,10 @@ SocketUtil.socket.on('sirenPrep', (data) => {
 })
 
 SocketUtil.socket.on('sirenCountdown', (countdown) => {
-    console.log("Siren countdown " + countdown);
     $('#siren-count').text(Math.round(countdown / 1000));
 
+    audioTime = (totalSirenTime - countdown) / 1000;
+    console.log("Siren countdown " + countdown + " audio " + audioTime);
     let percentFilled = ((totalSirenTime - countdown) / totalSirenTime);
     percentFilled = Math.min(1, percentFilled + 0.006) // Prediction
 
@@ -155,6 +164,12 @@ $(document).ready(() => {
         }
 
         updateThumbState();
+
+        if (!audioStarted && front != '') {
+            audioStarted = true;
+            $("#" + front + "-audio")[0].play();
+            $("#" + front + "-audio")[0].volume = 0;
+        }
     })
 
     $(".lang-link").click((e) => {
