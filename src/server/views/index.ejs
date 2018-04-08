@@ -142,10 +142,12 @@
         <a href="raycaster.xyz">raycaster studio</a>
     </section>
     <audio id="yes-audio">
-        <source src="<%= i18n.YES_AUDIO %>" type="audio/ogg">
+        <source src="/audio/<%= i18n.YES_AUDIO %>.ogg" type="audio/ogg">
+        <source src="/audio/<%= i18n.YES_AUDIO %>.mp3" type="audio/mpeg">
     </audio> 
     <audio id="no-audio">
-        <source src="<%= i18n.NO_AUDIO %>" type="audio/ogg">
+        <source src="/audio/<%= i18n.NO_AUDIO %>.ogg" type="audio/ogg">
+        <source src="/audio/<%= i18n.NO_AUDIO %>.mp3" type="audio/mpeg">
     </audio> 
     <%if (auth) { %>
         <form id="auth-form" method="get" action="<%= auth.action %>">

@@ -28,6 +28,6 @@ export default {
     RESUME: "הצפירה תתחיל מחדש בעוד מספר רגעים.",
     SIREN_OVER: "תם הטקס.",
     MAY_SURF: "הקהל ראשי לגלוש.",
-    YES_AUDIO: '/audio/ken.ogg',
-    NO_AUDIO: '/audio/lo.ogg'
+    YES_AUDIO: 'ken',
+    NO_AUDIO: 'lo'
 }

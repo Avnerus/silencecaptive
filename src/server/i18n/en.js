@@ -29,7 +29,7 @@ export default {
     RESUME: "The siren will resume shortly.",
     SIREN_OVER: "End of service.",
     MAY_SURF: "You may now surf the net.",
-    YES_AUDIO: '/audio/ken.ogg',
-    NO_AUDIO: '/audio/lo.ogg'
+    YES_AUDIO: 'ken',
+    NO_AUDIO: 'lo'
 }
 
