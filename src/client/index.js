@@ -1,4 +1,5 @@
 import SocketUtil from './socket-util'
+import URI from 'urijs'
 
 let numberInRoom = 0;
 let secondsRemain = 9999;
@@ -179,11 +180,9 @@ $(document).ready(() => {
     $(".lang-link").click((e) => {
         e.preventDefault();
         let selectedLang = $(e.currentTarget).data('lang');
-        let append = '?';
-        if (window.location.search && window.location.search.length > 0) {
-            append = '&';
-        }
-        window.location = window.location + append + 'lang=' + selectedLang;
+        let uri = URI(location);
+        uri.removeSearch("lang").addSearch("lang", selectedLang);
+        window.location = uri.toString();
     })
 
 })
