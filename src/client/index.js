@@ -25,6 +25,11 @@ let audioStarted = false;
 console.log("Starting silencecaptive");
 SocketUtil.initWithUrl(window.location.protocol + "//" + window.location.host);
 
+SocketUtil.socket.on('ready', () => {
+    console.log('Joining room');
+    SocketUtil.socket.emit('join');
+})
+
 SocketUtil.socket.on('numberInRoom', (number) => {
     console.log("Number in room!", number);
     $('#connected-value').text(number);
