@@ -103,7 +103,7 @@ export default class SilenceManager {
     updateRooms() {
         if (this.waitingRoom) {
             let waitingRoom = this.roomData[this.waitingRoom];
-            if (waitingRoom.numberInRoom >= 2) {
+            if (waitingRoom && waitingRoom.numberInRoom >= 2) {
                 let now = new Date().getTime();
                 let millisRemain = waitingRoom.sirenTime - now;
                 let secondsRemain = Math.floor(millisRemain / 1000);
