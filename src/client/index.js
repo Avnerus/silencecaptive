@@ -1,5 +1,6 @@
 import SocketUtil from './socket-util'
 import URI from 'urijs'
+import WebAudio from './web-audio'
 
 let numberInRoom = 0;
 let secondsRemain = 9999;
@@ -19,6 +20,7 @@ let currentFill = [];
 let lang = 'he';
 let front = '';
 
+let audio = null;
 let audioStarted = false;
 
 
@@ -51,8 +53,8 @@ SocketUtil.socket.on('state', (state) => {
         $("#siren-wait").show();
         $("#siren-container").hide();
         $("#siren-over").hide();
-        if (front != '' && audioStarted) {
-            $("#" + front + "-audio")[0].volume = 0;
+        if (audio && audioStarted) {
+            audio.stop();
         }
         audioTime = 0;
         $('.thumb-button').removeClass('pressed');
@@ -67,8 +69,8 @@ SocketUtil.socket.on('state', (state) => {
             $("#siren-anim").hide();
         } else {
             console.log("Someone let go!");
-            if (front != '' && audioStarted) {
-                $("#" + front + "-audio")[0].volume = 0;
+            if (audio && audioStarted) {
+                audio.stop();
             }
             $('#siren-pause').show();
             if (lastThumbState == 0) {
@@ -87,13 +89,12 @@ SocketUtil.socket.on('state', (state) => {
         $("#siren-anim").show();
         $("#siren-pause").hide();
         console.log("Restarting audio at", audioTime);
-        $("#" + front + "-audio")[0].volume = 1.0;
-        $("#" + front + "-audio")[0].currentTime = audioTime;
+        audio.play(audioTime);
     }
     else if (state == 'SIREN_OVER') {
         $("#siren-container").hide();
         $("#siren-over").show();
-        $("#" + front + "-audio")[0].pause();
+        audio.stop();
         if ($('#auth-form').length > 0) {
             console.log("Authenticating...");
             setTimeout(() => {
@@ -123,14 +124,17 @@ SocketUtil.socket.on('sirenPrep', (data) => {
     $('#fillRect').attr("y", currentFill[0] + currentFill[1]);
     $('#fillRect').attr("height", 0);
     $('#fillRect').attr("clip-path", "url(#sirenClip-" + front + ")");
-    
 
-        /*
-    $('#fillRect').velocity({
-        y: 65,
-        height: 240,
-        }, {duration: 60000,queue: false, easing: 'linear'});
-        */
+    // Init audio object
+    //audio = new HTMLAudio($("#" + front + "-audio")[0]);
+    let src = "/audio/" + front;
+    if (isIphone()) {
+        src += ".m4a";
+    } else {
+        src += ".ogg";
+    }
+    console.log("Audio src", src);
+    audio = new WebAudio(src);
 })
 
 SocketUtil.socket.on('sirenCountdown', (countdown) => {
@@ -177,8 +181,7 @@ $(document).ready(() => {
 
         if (!audioStarted && front != '') {
             audioStarted = true;
-            $("#" + front + "-audio")[0].play();
-            $("#" + front + "-audio")[0].volume = 0;
+            audio.unlock();
         }
     })
 
@@ -201,5 +204,15 @@ function updateThumbState() {
     lastThumbState = newThumbState;
 }
 
+function isIphone() {
+    let userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+    // iOS detection from: http://stackoverflow.com/a/9039885/177710
+    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 
