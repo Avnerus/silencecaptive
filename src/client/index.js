@@ -23,6 +23,8 @@ let front = '';
 let audio = null;
 let audioStarted = false;
 
+let thumbDebug = true;
+
 console.log("Starting silencecaptive");
 //  Sanity check
 setInterval(() => {
@@ -167,30 +169,34 @@ SocketUtil.socket.on('sirenCountdown', (countdown) => {
 $(document).ready(() => {
     console.log("Binding events");
     $('.thumb-button').bind('touchstart', (event) => {
-        let target = $(event.currentTarget);
-        target.addClass('pressed');
-        thumbState[target.data('thumb')] = 1;
+        if (!thumbDebug) {
+            let target = $(event.currentTarget);
+            target.addClass('pressed');
+            thumbState[target.data('thumb')] = 1;
 
-        if (!audioStarted) {
-            audioStarted = true;
-            audio.unlock();
+            if (!audioStarted) {
+                audioStarted = true;
+                audio.unlock();
+            }
+            updateThumbState();
         }
-        updateThumbState();
     });
 
     $('.thumb-button').bind('touchend', (event) => {
         let target = $(event.currentTarget);
-        target.removeClass('pressed');
-        thumbState[target.data('thumb')] = 0; 
-
-        /* WEB DEBUG 
-        if (thumbState[target.data('thumb')] == 0) {
-            thumbState[target.data('thumb')] = 1; 
-            target.addClass('pressed');
-        } else {
-            thumbState[target.data('thumb')] = 0; 
+        if (!thumbDebug) {
             target.removeClass('pressed');
-            } */
+            thumbState[target.data('thumb')] = 0; 
+        }
+        else {
+            if (thumbState[target.data('thumb')] == 0) {
+                thumbState[target.data('thumb')] = 1; 
+                target.addClass('pressed');
+            } else {
+                thumbState[target.data('thumb')] = 0; 
+                target.removeClass('pressed');
+            } 
+        }
 
         updateThumbState();
 
