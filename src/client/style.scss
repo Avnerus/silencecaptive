@@ -3,6 +3,17 @@ body {
     color: white;
     padding: 0;
     margin: 0;
+
+    &.he {
+        a[data-lang="he"] {
+            display: none;
+        }
+    }
+    &.en {
+        a[data-lang="en"] {
+            display: none;
+        }
+    }
 }
 
 #siren-title {
