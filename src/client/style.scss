@@ -1,7 +1,7 @@
 body {
     background-color: black;
     color: white;
-
+padding-top:20%;
     margin: 0;
     font-family: 'Assistant', sans-serif;
     p{
@@ -117,7 +117,7 @@ body {
 
 #lang-select {
     display: flex;
-
+padding-top:20%;    
 
     justify-content: space-evenly;
     a {
@@ -125,4 +125,9 @@ body {
             font-size:1em;  
         
     }
+}
+
+#number-connected{
+    
+    padding-top:10%;
 }
