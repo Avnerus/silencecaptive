@@ -23,8 +23,14 @@ let front = '';
 let audio = null;
 let audioStarted = false;
 
-
 console.log("Starting silencecaptive");
+//  Sanity check
+setInterval(() => {
+    if (audio && audio.source && lastRoomState != 'SIREN_PLAY') {
+        audio.stop();
+    }
+},100);
+
 SocketUtil.initWithUrl(window.location.protocol + "//" + window.location.host);
 
 SocketUtil.socket.on('ready', () => {
@@ -83,6 +89,7 @@ SocketUtil.socket.on('state', (state) => {
                 $('#you-paused').hide();                                
             }
         }
+        audioStarted = false;
     }
     else if (state == 'SIREN_PLAY') {
         $("#siren-press").hide();
@@ -101,6 +108,9 @@ SocketUtil.socket.on('state', (state) => {
                 $('#auth-form').submit();
             },3000);
         }
+    }
+    else if (state == 'GONE') {
+        window.location.reload();
     }
     lastRoomState = state;
 })
@@ -156,33 +166,34 @@ SocketUtil.socket.on('sirenCountdown', (countdown) => {
 
 $(document).ready(() => {
     console.log("Binding events");
-    /* WEB DEBUG
     $('.thumb-button').bind('touchstart', (event) => {
         let target = $(event.currentTarget);
         target.addClass('pressed');
         thumbState[target.data('thumb')] = 1;
-        })*/
+
+        if (!audioStarted) {
+            audioStarted = true;
+            audio.unlock();
+        }
+        updateThumbState();
+    });
 
     $('.thumb-button').bind('touchend', (event) => {
         let target = $(event.currentTarget);
-        /* WEB DEBUG 
         target.removeClass('pressed');
-        thumbState[target.data('thumb')] = 0; */
+        thumbState[target.data('thumb')] = 0; 
 
+        /* WEB DEBUG 
         if (thumbState[target.data('thumb')] == 0) {
             thumbState[target.data('thumb')] = 1; 
             target.addClass('pressed');
         } else {
             thumbState[target.data('thumb')] = 0; 
             target.removeClass('pressed');
-        }
+            } */
 
         updateThumbState();
 
-        if (!audioStarted && front != '') {
-            audioStarted = true;
-            audio.unlock();
-        }
     })
 
     $(".lang-link").click((e) => {

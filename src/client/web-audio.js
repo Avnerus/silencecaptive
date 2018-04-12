@@ -40,13 +40,15 @@ export default class WebAudio {
     }
     unlock() {
         console.log("Unlocking");
+        this.context.resume();
+        /*
         this.source = this.context.createBufferSource();
         this.source.buffer = this.buffer;
         this.gainNode = this.context.createGain();
         this.gainNode.gain.value = 0;
         this.source.connect(this.gainNode);
         this.gainNode.connect(this.context.destination);
-        this.source.start(0);
+        this.source.start(0); */
     }
     pause() {
 

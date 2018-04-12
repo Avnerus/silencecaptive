@@ -49,6 +49,7 @@ export default class SilenceManager {
         if (roomData.numberInRoom >= 2) {
             // Set the siren in 15 seconds
             roomData.sirenTime = new Date().getTime() + this.WAIT_FOR_SIREN_SECONDS * 1000;
+            this.prep(roomData.name);
         }
         socket.join(this.waitingRoom);
         this.io.to(this.waitingRoom).emit('numberInRoom',roomData.numberInRoom);
@@ -60,39 +61,43 @@ export default class SilenceManager {
             if (this.socketData[socket.id].room) {
                 let socketRoom = this.socketData[socket.id].room;
                 let roomData = this.roomData[socketRoom];
-                console.log("Leaving room " + socketRoom);
-                let index = roomData.sockets.findIndex(sid => sid == socket.id);
-                if (index != -1) {
-                    console.log("Splicing index " + index);
-                    roomData.sockets.splice(index, 1);
-                } else {
-                    console.warn("Couldn't find socket in room data!")
-                }
-                socket.leave(socketRoom);
-                roomData.numberInRoom--;
-                this.io.to(socketRoom).emit('numberInRoom',roomData.numberInRoom);
-                if (roomData.numberInRoom == 0 && (!this.waitingRoom || this.waitingRoom != roomData.name)) {
-                    console.log("Disposing room " + roomData.name);
-                    delete this.roomData[roomData.name];
-                }
+                if (roomData) {
+                    console.log("Leaving room " + socketRoom);
+                    let index = roomData.sockets.findIndex(sid => sid == socket.id);
+                    if (index != -1) {
+                        console.log("Splicing index " + index);
+                        roomData.sockets.splice(index, 1);
+                    } else {
+                        console.warn("Couldn't find socket in room data!")
+                    }
+                    socket.leave(socketRoom);
+                    roomData.numberInRoom--;
+                    this.io.to(socketRoom).emit('numberInRoom',roomData.numberInRoom);
+                    if (roomData.numberInRoom == 0 && (!this.waitingRoom || this.waitingRoom != roomData.name)) {
+                        console.log("Disposing room " + roomData.name);
+                        delete this.roomData[roomData.name];
+                    }
 
-                // If now there is only one person then we have to wait again for the siren.
-                if (roomData.numberInRoom < 2 && roomData.state != 'WAITING') {
-                    if (this.waitingRoom) {
-                        console.log("Disposing waiting room due to emergency" + this.waitingRoom);
-                        delete this.roomData[this.waitingRoom];
+                    // If now there is only one person then we have to wait again for the siren.
+                    if (roomData.numberInRoom < 2 && roomData.state != 'WAITING') {
+                        if (this.waitingRoom) {
+                            console.log("Disposing room due to emergency" + this.waitingRoom);
+                            this.changeState(roomData.name, 'GONE');
+                            delete this.roomData[roomData.name];
+                        } else {
+                            // Reset room
+                            roomData.sirenCountdown = this.SIREN_MILLISECONDS;
+                            if (roomData.timer) {
+                                clearInterval(roomData.timer);
+                                roomData.timer = null;
+                            }
+                            for (let i = 0; i < roomData.sockets.length; i++) {
+                                this.socketData[roomData.sockets[i]].thumbState = 0;
+                            }
+                            this.changeState(roomData.name, 'WAITING');
+                            this.waitingRoom = roomData.name;
+                        }
                     }
-                    this.waitingRoom = roomData.name;
-                    // Reset room
-                    roomData.sirenCountdown = this.SIREN_MILLISECONDS;
-                    if (roomData.timer) {
-                        clearInterval(roomData.timer);
-                        roomData.timer = null;
-                    }
-                    for (let i = 0; i < roomData.sockets.length; i++) {
-                        this.socketData[roomData.sockets[i]].thumbState = 0;
-                    }
-                    this.changeState(roomData.name, 'WAITING');
                 }
 
             }
@@ -111,21 +116,23 @@ export default class SilenceManager {
 
                 if (secondsRemain == 0) {
                     this.changeState(this.waitingRoom, 'SIREN_PAUSE')
-                    // Prepping
-                    let yes = true;
-                    let roomData = this.roomData[this.waitingRoom];
-                    for (let i = 0; i < roomData.sockets.length; i++) {
-                        let socket = this.socketData[roomData.sockets[i]].handle;
-                        socket.emit('sirenPrep', {
-                            totalTime: this.SIREN_MILLISECONDS,
-                            animation: yes ? 'yes' : 'no'
-                        })
-                        yes = !yes;
-                    }
-
                     this.waitingRoom = null;
                 }
             }
+        }
+    }
+
+    prep(room) {
+        // Prepping
+        let yes = true;
+        let roomData = this.roomData[this.waitingRoom];
+        for (let i = 0; i < roomData.sockets.length; i++) {
+            let socket = this.socketData[roomData.sockets[i]].handle;
+            socket.emit('sirenPrep', {
+                totalTime: this.SIREN_MILLISECONDS,
+                animation: yes ? 'yes' : 'no'
+            })
+            yes = !yes;
         }
     }
 
