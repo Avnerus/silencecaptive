@@ -3,10 +3,23 @@ body {
     color: white;
 padding-top:20%;
     margin: 0;
+<<<<<<< HEAD
     font-family: 'Assistant', sans-serif;
     p{
     padding-right: 10%;
     padding-left: 10%;
+=======
+
+    &.he {
+        a[data-lang="he"] {
+            display: none;
+        }
+    }
+    &.en {
+        a[data-lang="en"] {
+            display: none;
+        }
+>>>>>>> cabe7f6d5fbf90a081fc42560bbc010e85abd36b
     }
 }
 
