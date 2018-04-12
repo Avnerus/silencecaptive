@@ -9,7 +9,7 @@
   <meta name="mobile-web-app-capable" content="yes">
 
   <link rel="stylesheet" href="/css/style.css">
-
+<link href="https://fonts.googleapis.com/css?family=Assistant" rel="stylesheet">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -30,10 +30,7 @@
   <body dir="<%= i18n.HTML_DIR %>" class="<%= i18n.LANG %>">
     <script src="/bundle.js"></script>
     <section id="siren-wait" style="display:block;">
-        <section id="lang-select">
-            <a class="lang-link" data-lang="he" href="">עברית</a>
-            <a class="lang-link" data-lang="en" href="">English</a>
-        </section>
+       
         <section id="welcome">
             <p>
                 <%= i18n.WELCOME_1 %>
@@ -48,6 +45,7 @@
                 <%= i18n.WELCOME_4 %>
             </p>
         </section>
+
         <section id="number-connected">
             <p>
                 <span id="connected-message">
@@ -55,6 +53,10 @@
                 </span>
                 <span id="connected-value"></span>
             <p>
+        </section>
+          <section id="lang-select">
+            <a class="lang-link" data-lang="he" href="">עברית</a>
+            <a class="lang-link" data-lang="en" href="">English</a>
         </section>
         <section id="siren-countdown" style="display:none;">
             <p dir="ltr">

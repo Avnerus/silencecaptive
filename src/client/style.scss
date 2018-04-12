@@ -1,8 +1,13 @@
 body {
     background-color: black;
     color: white;
-    padding: 0;
+
     margin: 0;
+    font-family: 'Assistant', sans-serif;
+    p{
+    padding-right: 10%;
+    padding-left: 10%;
+    }
 }
 
 #siren-title {
@@ -11,12 +16,14 @@ body {
     position: absolute;
     text-align: center;
     width: 100%;
+
 }
 
 #siren-instructions {
     position: absolute;
     top: 40%;
     padding: 10px;
+    font-family: 'Assistant', sans-serif;
     p {
         margin-top: 30px;
     }
@@ -110,8 +117,12 @@ body {
 
 #lang-select {
     display: flex;
+
+
     justify-content: space-evenly;
     a {
         color: white;
+            font-size:1em;  
+        
     }
 }

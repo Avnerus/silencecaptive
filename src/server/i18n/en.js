@@ -4,7 +4,7 @@ export default {
     WELCOME_1: "In honor of Israel's 70th anniversary, access to the internet will be enabled after a moment of silence.",
     WELCOME_2: 'This is possible only with the comradery of two people or more, gently holding their phones.',
     WELCOME_3: 'We are waiting for another person to join the WiFi network.',
-    WELCOME_4: 'Please make sure that sound is turned on in your device.',
+    WELCOME_4: 'Please make sure that sound is turned on in your device and the device is not set to vibrate.',
     WELCOME_5: 'Thank you for your patience.',
     NUM_CONNECTED: 'Number standing:',
     SIREN_TITLE: 'Moment of silence',
