@@ -1,3 +1,5 @@
+@import 'fonts';
+
 body {
     background-color: black;
     color: white;
@@ -36,7 +38,7 @@ body {
 #siren-instructions {
     position: absolute;
     top: 40%;
-        right:15 %;
+    right:15%;
     font-family: 'Assistant', sans-serif;
     p {
         margin-top: 30px;
