@@ -187,6 +187,11 @@ $(document).ready(() => {
         if (!thumbDebug) {
             target.removeClass('pressed');
             thumbState[target.data('thumb')] = 0; 
+
+            if (!audioStarted) {
+                audioStarted = true;
+                audio.unlock();
+            }
         }
         else {
             if (thumbState[target.data('thumb')] == 0) {
