@@ -7,6 +7,8 @@ export default {
     WELCOME_4: 'אנו ממתינים להצטרפות משתמש/ת נוספ/ת לרשת הוויפי.',
     WELCOME_5: 'תודה על הסבלנות',
     NUM_CONNECTED: 'מספר העומדים:',
+    SIREN_COUNTDOWN: 'הצפירה תחל בעוד ',
+    SECONDS: 'שניות.',
     SIREN_TITLE: 'דקת דומיה',
     SIREN_INSTRUCTIONS: 'הנח/י את אגודלך במקום המיועד לכך, למשך דקה. בעוד מספר רגעים תשמע צפירה.',
     THUMB: 'אגודל',

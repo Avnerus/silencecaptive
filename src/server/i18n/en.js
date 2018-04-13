@@ -7,6 +7,8 @@ export default {
     WELCOME_4: 'Please make sure that sound is turned on in your device and the device is not set to vibrate.',
     WELCOME_5: 'Thank you for your patience.',
     NUM_CONNECTED: 'Number standing:',
+    SIREN_COUNTDOWN: 'The siren will begin in ',
+    SECONDS: 'seconds.',
     SIREN_TITLE: 'Moment of silence',
     SIREN_INSTRUCTIONS: 'Place your thumbs in the designated circules for a minute. In a few moments, a siren will start.',
     THUMB: 'Thumb',
