@@ -6,7 +6,7 @@ export default class SilenceManager {
         this.io = io;
         this.roomData = {};
 
-        this.WAIT_FOR_SIREN_SECONDS = 10;
+        this.WAIT_FOR_SIREN_SECONDS = 5;
         this.WAIT_UPDATE_INTERVAL = 100;
         this.SIREN_MILLISECONDS = 60 * 1000;
         this.SIREN_UPDATE_INTERVAL = 500;
