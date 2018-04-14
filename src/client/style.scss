@@ -3,15 +3,11 @@
 body {
     background-color: black;
     color: white;
-    padding-top:20%;
+    padding:10%;
     font-weight:600;
     margin: 0;
     font-family: 'Assistant', sans-serif;
 
-    p {
-        padding-right: 15%;
-        padding-left: 20%;
-    }
 
     &.he {
         a[data-lang="he"] {
@@ -27,19 +23,16 @@ body {
 
 #siren-title {
     font-size: 48px;
-    top: 25%;
-    right:15%;
-    position: absolute;
-    text-align: right;
+    position: relative;
     width: 100%;
-
+    padding-top: 10%;
 }
 
 #siren-instructions {
-    position: absolute;
-    top: 40%;
-    right:15%;
+    padding-top: 15%;
     font-family: 'Assistant', sans-serif;
+    position: relative;
+
     p {
         margin-top: 30px;
     }
@@ -51,26 +44,27 @@ body {
     display: flex;
     flex-direction: row;
     align-items: center;
-    width: 100%;
+    width: 80%;
     justify-content: space-evenly;
 }
 
 .thumb-button {
-    width: 400px;
-    height: 400px;
+    width: 70px;
+    height: 70px;
     border: 2px solid;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 30px;
+    border-radius: 50%;
     margin-right: 30px;
     margin-left: 30px;
+    color: #8c8c8c;
+    font-size: 14px;
+    user-select: none;
 
     &.pressed {
-        color: black;
-        background-color: white;
-
-
+        box-shadow: 0 0 10px #fff;
+        border-color: #cbcbcb;
     }
 }
 
@@ -91,7 +85,7 @@ body {
     background-color: rgba(0, 0, 0, 0.8);
     position: absolute;
     height: 70%;
-    width: 100%;
+    width: 80%;
     top: 0;
     top: 0;
     display: flex;
@@ -110,7 +104,7 @@ body {
 #siren-over {
     position: absolute;
     top: 0;
-    width: 100%;
+    width: 80%;
     height: 90%;
     display: flex;
     flex-direction: column;
@@ -135,8 +129,11 @@ body {
 
 #lang-select {
     display: flex;
-    padding-top:20%;    
+    padding-top: 20%;
     justify-content: space-evenly;
+    position: absolute;
+    bottom: 20px;
+    width: 80%;
 
     a {
         color: white;
@@ -149,4 +146,10 @@ body {
 
     font-family: 'Assistant' sans-serif;
     font-weight:300;
+}
+
+#please-wait {
+    position: absolute;
+    bottom: 100px;
+    font-size: 18px;
 }

@@ -32,6 +32,7 @@ export default {
     SIREN_OVER: "End of service.",
     MAY_SURF: "You may now surf the net.",
     YES_AUDIO: 'ken',
-    NO_AUDIO: 'lo'
+    NO_AUDIO: 'lo',
+    PLEASE_WAIT: 'Please wait while connecting...'
 }
 
