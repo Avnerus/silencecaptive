@@ -51,8 +51,8 @@ body {
 }
 
 .thumb-button {
-    width: 75px;
-    height: 75px;
+    width: 65px;
+    height: 65px;
     border: 2px solid;
     display: flex;
     align-items: center;
@@ -63,6 +63,11 @@ body {
     color: #8c8c8c;
     font-size: 14px;
     user-select: none;
+
+    @media screen and (min-width: 350px) {
+         width: 75px;
+         height: 75px;
+    }
 
    @media screen and (min-width: 400px) {
         width: 100px;
