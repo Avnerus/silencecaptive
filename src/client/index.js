@@ -23,7 +23,7 @@ let front = '';
 let audio = null;
 let audioStarted = false;
 
-let thumbDebug = false;
+let thumbDebug = true;
 
 console.log("Starting silencecaptive");
 //  Sanity check
