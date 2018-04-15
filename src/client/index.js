@@ -167,6 +167,7 @@ SocketUtil.socket.on('sirenCountdown', (countdown) => {
 })
 
 $(document).ready(() => {
+    alert("Running resolution: " + window.innerWidth + " x " + window.innerHeight);
     console.log("Binding events");
     $('.thumb-button').bind('touchstart', (event) => {
         if (!thumbDebug) {
