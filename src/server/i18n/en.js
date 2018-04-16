@@ -9,7 +9,7 @@ export default {
     NUM_CONNECTED: 'Number standing:',
     SIREN_COUNTDOWN: 'The siren will begin in ',
     SECONDS: 'seconds.',
-    SIREN_TITLE: 'Moment of silence',
+    SIREN_TITLE: 'A moment of silence',
     SIREN_INSTRUCTIONS: 'Place your thumbs in the designated circules for a minute. In a few moments, a siren will start.',
     THUMB: 'Thumb',
     VIEWBOX: "0 0 526.66 315.98",
@@ -32,6 +32,7 @@ export default {
     SIREN_OVER: "End of service.",
     MAY_SURF: "You may now surf the net.",
     YES_AUDIO: 'ken',
-    NO_AUDIO: 'lo'
+    NO_AUDIO: 'lo',
+    PLEASE_WAIT: 'Please wait while connecting...'
 }
 

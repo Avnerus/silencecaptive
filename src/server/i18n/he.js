@@ -31,5 +31,6 @@ export default {
     SIREN_OVER: "תם הטקס.",
     MAY_SURF: "הקהל ראשי לגלוש.",
     YES_AUDIO: 'ken',
-    NO_AUDIO: 'lo'
+    NO_AUDIO: 'lo',
+    PLEASE_WAIT: 'נא המתן להתחברות...',
 }

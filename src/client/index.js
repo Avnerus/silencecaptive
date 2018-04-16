@@ -23,7 +23,7 @@ let front = '';
 let audio = null;
 let audioStarted = false;
 
-let thumbDebug = true;
+let thumbDebug = false;
 
 console.log("Starting silencecaptive");
 //  Sanity check
@@ -167,6 +167,7 @@ SocketUtil.socket.on('sirenCountdown', (countdown) => {
 })
 
 $(document).ready(() => {
+    //alert("Running resolution: " + window.innerWidth + " x " + window.innerHeight);
     console.log("Binding events");
     $('.thumb-button').bind('touchstart', (event) => {
         if (!thumbDebug) {
