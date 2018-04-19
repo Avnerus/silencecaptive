@@ -33,6 +33,7 @@ export default {
     MAY_SURF: "You may now surf the net.",
     YES_AUDIO: 'ken',
     NO_AUDIO: 'lo',
-    PLEASE_WAIT: 'Please wait while connecting...'
+    PLEASE_WAIT: 'Please wait while connecting...',
+    REDIRECT_URL: 'http://cca.org.il/en/captive-portal-a-moment-of-silence/'
 }
 

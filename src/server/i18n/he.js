@@ -33,4 +33,5 @@ export default {
     YES_AUDIO: 'ken',
     NO_AUDIO: 'lo',
     PLEASE_WAIT: 'נא המתן להתחברות...',
+    REDIRECT_URL: 'http://cca.org.il/he/captive-portal-a-moment-of-silence/'
 }
