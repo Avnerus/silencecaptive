@@ -36,10 +36,11 @@ const app = express()
 app.get('/', function (req, res) {
     let i18nData = i18n.he;
     let auth = null;
-    if (req.query.authaction && req.query.tok) {
+    if (req.query.authaction && req.query.tok && req.query.redir) {
         auth = {
             action: req.query.authaction,
-            tok : req.query.tok
+            tok : req.query.tok,
+            redir: req.query.redir
         }  
     }
     if (req.query.lang && SUPPORTED_LANGS[req.query.lang]) {
